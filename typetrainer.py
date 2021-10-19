@@ -4,8 +4,17 @@ import time
 init(autoreset=True)
 
 ord=["humor","magenta","vacation","wet","erratic","kindly","shape","accept","helpful","dark","demand","refund","iron","concentrate","dismiss","add","liver","arise","architect","identification","cash","pension","bowel","dismissal","drag","resignation","ghostwriter","suffering","instal","dialogue"]
+
 text=["The ants enjoyed the barbecue more than the family.","I'd always thought lightning was something only I could see.","He didn't heed the warning and it had turned out surprisingly well.","I met an interesting turtle while the song on the radio blasted away.","He stepped gingerly onto the bridge knowing that enchantment awaited on the other side."]
-options ={"w":"Words", "s":"Sentences","q":"quit"}
+
+left=['q','w','e','a','s','d','z','x','c','r','f','v','t','g']
+
+right=['y','u','i','o','p','h','j','k','l','b','n','m']
+
+lrb={"l":"Left","r":"Right","b":"Both"}
+
+options ={"w":"Words", "s":"Sentences","l":"Letters","q":"quit"}
+
 tryAgain={"t":"Try Again","h":"Add High Score", "q":"Quit"}
 
 highScore={}
@@ -104,7 +113,62 @@ def startSentenceGame(sentence):
                 print("You can only add your score if you got all words correct")
             
                 
-
+def startLettersGame():
+    mode=menu("Select Keyboardside","\nSide: ",lrb)
+    
+    if mode=="l":
+        leftGame()
+    elif mode=="r":
+        rightGame()
+    elif mode=="b":
+        bothGame()
+    
+def leftGame():
+    
+    for i in range(0,10):
+        let=""
+        for x in range(0,3):
+            let += left[randint(0,13)]
+        print(let)
+        userLet = input("Write Here: ")
+        if not userLet == let:
+            print("Game Over!")
+            return ""
+    print("Congratulations you Won!")
+    
+def rightGame():
+    for i in range(0,10):
+        let=""
+        for x in range(0,3):
+            let += right[randint(0,12)]
+        print(let)
+        userLet = input("Write Here: ")
+        if not userLet == let:
+            print("Game Over!")
+            return ""
+    print("Congratulations you Won!")
+    
+def bothGame():
+    for i in range(0,10):
+        let=""
+        
+        for x in range(0,3):
+            if randint(0,1) ==0:
+                let += left[randint(0,13)]
+            else:
+                let += right[randint(0,12)]
+            
+            
+           
+        print(let)
+        userLet = input("Write Here: ")
+        
+        if not userLet == let:
+            print("Game Over!")
+            return ""
+    print("Congratulations you Won!")
+    
+    
 def startScreen():
     print("--------------------")
     print()
@@ -122,6 +186,8 @@ def startScreen():
         startSentenceGame(text[randint(0,len(text)-1)])
     elif mode =="w":
         startWordGame()
+    elif mode=="l":
+        startLettersGame()
         
 def addHighScore(wpm):
     name= input("What your name? ")
@@ -147,13 +213,15 @@ def showHighScore(score):
         startSentenceGame(text[randint(0,len(text)-1)])
     elif mode =="w":
         startWordGame()
+    elif mode=="l":
+        startLettersGame()
     
     
    
     
-addHighScore(50)
-showHighScore(highScore)
-#startScreen()
+#addHighScore(50)
+#showHighScore(highScore)
+startScreen()
 
 
 
