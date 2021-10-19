@@ -6,7 +6,8 @@ init(autoreset=True)
 ord=["humor","magenta","vacation","wet","erratic","kindly","shape","accept","helpful","dark","demand","refund","iron","concentrate","dismiss","add","liver","arise","architect","identification","cash","pension","bowel","dismissal","drag","resignation","ghostwriter","suffering","instal","dialogue"]
 text=["The ants enjoyed the barbecue more than the family.","I'd always thought lightning was something only I could see.","He didn't heed the warning and it had turned out surprisingly well.","I met an interesting turtle while the song on the radio blasted away.","He stepped gingerly onto the bridge knowing that enchantment awaited on the other side."]
 options ={"w":"Words", "s":"Sentences","q":"quit"}
-tryAgain={"t":"Try Again", "q":"Quit"}
+tryAgain={"t":"Try Again","h":"Add High Score", "q":"Quit"}
+
 highScore={}
 
 
@@ -52,9 +53,15 @@ def startWordGame():
             
         del ord[i]
         if len(ord)==length-10:
-            print (results(start,length))
-            if menu("Do you want to try again?","\nOptions: ",tryAgain) =="t":
+            wpm=(results(start,10))
+            print (wpm)
+            choice=menu("Do you want to try again?","\nOptions: ",tryAgain)
+            if choice =="t":
                 startWordGame()
+            elif choice =="h":
+                addHighScore(wpm)
+                showHighScore(highScore)
+                
             
 
 def startSentenceGame(sentence):
@@ -80,16 +87,22 @@ def startSentenceGame(sentence):
             
         i+=1
         if i==length:
-            print (results(start,length))
+            wpm=results(start,length)
+            print (wpm)
             
             if antalOrd==length:
                 print("\n Congratulations you got everything correct!")
             else:
                 print("\n You got "+str(antalOrd)+"/"+str(length)+" correct! Keep practicing!")
-            
-            if menu("Do you want to try again?","\nOptions: ",tryAgain)=="t":
-                
+            choice =menu("Do you want to try again?","\nOptions: ",tryAgain)
+            if choice =="t":
                 startSentenceGame(text[randint(0,len(text)-1)])
+            elif choice=="h" and antalOrd==length:
+                addHighScore(wpm)
+                showHighScore(highScore)
+            elif choice=="h":
+                print("You can only add your score if you got all words correct")
+            
                 
 
 def startScreen():
@@ -111,7 +124,7 @@ def startScreen():
         startWordGame()
         
 def addHighScore(wpm):
-    name= input("What your name?")
+    name= input("What your name? ")
     
     highScore[name]= wpm
     
@@ -121,14 +134,26 @@ def addHighScore(wpm):
 def showHighScore(score):
     i=1
     f=sorted(score.items())
-    for a,b in f:
-        print(str(i)+": "+str(a)+" WPM: "+str(b))
+    
+    print("\n"+"\u0332".join("HIGHSCORE ")+"\n")
+    
+    for a,b in reversed(f):
+        print(str(i)+": "+str(a)+" "+str(b))
+        i+=1
+        
+    mode=menu("\nPlay Again?","\nMode: ",options)
+    
+    if mode =="s":
+        startSentenceGame(text[randint(0,len(text)-1)])
+    elif mode =="w":
+        startWordGame()
+    
     
    
     
-#addHighScore(50)
-#showHighScore(highScore)
-startScreen()
+addHighScore(50)
+showHighScore(highScore)
+#startScreen()
 
 
 
