@@ -13,7 +13,7 @@ right=['y','u','i','o','p','h','j','k','l','b','n','m']
 
 lrb={"l":"Left","r":"Right","b":"Both"}
 
-options ={"w":"Words", "s":"Sentences","l":"Letters","q":"quit"}
+options ={"w":"Words", "s":"Sentences","l":"Letters","h":"Show Highscores","q":"quit"}
 
 tryAgain={"t":"Try Again","h":"Add High Score", "q":"Quit"}
 
@@ -43,9 +43,20 @@ def results(start,length):
     
     stop = time.time()
     result = (stop-start)/60
-    return("WPM: "+str(int(length/result)))
+    return("WPM: "+str(int((length/result)+0.5)))
+
+def optionsScreen():
+    mode=menu("Select gamemode","\nMode: ",options)
     
-    
+    if mode =="s":
+        startSentenceGame(text[randint(0,len(text)-1)])
+    elif mode =="w":
+        startWordGame()
+    elif mode=="l":
+        startLettersGame()
+    elif mode=="h":
+        showHighScore(highScore)
+
 def startWordGame():
     start =time.time()
     i=0
@@ -57,9 +68,7 @@ def startWordGame():
         i=randint(0,length-x)
         while comp(ord[i]) ==False:
             print("\n"+Fore.RED+"Wrong!\n")
-            
-            
-            
+                    
         del ord[i]
         if len(ord)==length-10:
             wpm=(results(start,10))
@@ -136,6 +145,8 @@ def leftGame():
             return ""
     print("Congratulations you Won!")
     
+    optionsScreen()
+    
 def rightGame():
     for i in range(0,10):
         let=""
@@ -147,6 +158,9 @@ def rightGame():
             print("Game Over!")
             return ""
     print("Congratulations you Won!")
+    
+    optionsScreen()
+    
     
 def bothGame():
     for i in range(0,10):
@@ -168,59 +182,45 @@ def bothGame():
             return ""
     print("Congratulations you Won!")
     
+    optionsScreen()
     
 def startScreen():
     print("--------------------")
     print()
     print()
-    print("    TypeTrainer")
+    print(Fore.BLUE+"    TypeTrainer")
     print()
     print()
     print("--------------------")
     print()
     input("Press enter to start the game\n")
 
-    mode=menu("Select gamemode","\nMode: ",options)
+    optionsScreen()
     
-    if mode =="s":
-        startSentenceGame(text[randint(0,len(text)-1)])
-    elif mode =="w":
-        startWordGame()
-    elif mode=="l":
-        startLettersGame()
+
         
+       
 def addHighScore(wpm):
     name= input("What your name? ")
     
     highScore[name]= wpm
     
-    
-    
-    
+       
 def showHighScore(score):
     i=1
     f=sorted(score.items())
     
-    print("\n"+"\u0332".join("HIGHSCORE ")+"\n")
+    print("\n"A+"\u0332".join("HIGHSCORE ")+"\n")
     
     for a,b in reversed(f):
         print(str(i)+": "+str(a)+" "+str(b))
         i+=1
-        
-    mode=menu("\nPlay Again?","\nMode: ",options)
+    print()
     
-    if mode =="s":
-        startSentenceGame(text[randint(0,len(text)-1)])
-    elif mode =="w":
-        startWordGame()
-    elif mode=="l":
-        startLettersGame()
+    optionsScreen()
     
-    
-   
-    
-#addHighScore(50)
-#showHighScore(highScore)
+       
+
 startScreen()
 
 
