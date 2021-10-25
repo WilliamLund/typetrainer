@@ -104,6 +104,8 @@ def startSentenceGame(sentence):
             antalOrd -=1
             
         i+=1
+        
+        
         if i==length:
             wpm=results(start,length)
             print (wpm)
@@ -142,6 +144,7 @@ def leftGame():
         userLet = input("Write Here: ")
         if not userLet == let:
             print("Game Over!")
+            optionsScreen()
             return ""
     print("Congratulations you Won!")
     
@@ -156,6 +159,7 @@ def rightGame():
         userLet = input("Write Here: ")
         if not userLet == let:
             print("Game Over!")
+            optionsScreen()
             return ""
     print("Congratulations you Won!")
     
@@ -179,6 +183,7 @@ def bothGame():
         
         if not userLet == let:
             print("Game Over!")
+            optionsScreen()
             return ""
     print("Congratulations you Won!")
     
@@ -210,7 +215,7 @@ def showHighScore(score):
     i=1
     f=sorted(score.items())
     
-    print("\n"A+"\u0332".join("HIGHSCORE ")+"\n")
+    print("\n"+"\u0332".join("HIGHSCORE ")+"\n")
     
     for a,b in reversed(f):
         print(str(i)+": "+str(a)+" "+str(b))
