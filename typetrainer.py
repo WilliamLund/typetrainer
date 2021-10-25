@@ -122,6 +122,7 @@ def startSentenceGame(sentence):
                 showHighScore(highScore)
             elif choice=="h":
                 print("You can only add your score if you got all words correct")
+                optionsScreen()
             
                 
 def startLettersGame():
@@ -213,11 +214,11 @@ def addHighScore(wpm):
        
 def showHighScore(score):
     i=1
-    f=sorted(score.items())
+    f=sorted(score.items(),reverse=True,key= x[1])
     
     print("\n"+"\u0332".join("HIGHSCORE ")+"\n")
     
-    for a,b in reversed(f):
+    for a,b in f:
         print(str(i)+": "+str(a)+" "+str(b))
         i+=1
     print()
@@ -226,8 +227,8 @@ def showHighScore(score):
     
        
 
-startScreen()
-
-
-
+#startScreen()
+addHighScore(24)
+addHighScore(38)
+showHighScore(highScore)
 
