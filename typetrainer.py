@@ -214,7 +214,7 @@ def addHighScore(wpm):
        
 def showHighScore(score):
     i=1
-    f=sorted(score.items(),reverse=True,key= x[1])
+    f=sorted(score.items(),reverse=True,key=lambda x:x[1])
     
     print("\n"+"\u0332".join("HIGHSCORE ")+"\n")
     
